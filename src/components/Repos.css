@@ -1,11 +1,10 @@
 .Repos {
-    width:55%;
     padding:1em 0;
     word-break: break-word;
 }
 
 .Repos_Ul {
-    height:50vh;
+    height:25vh;
     overflow-y: auto;
     list-style-type: none;
     margin:0;
@@ -52,10 +51,7 @@
 
 @media only screen and (max-width: 650px) {
     .Repos {
-        width:70%;
-        height:25vh;
-        margin:0 auto;
-        margin-top:2em;
+        margin-top:1em;
         padding:0 1em;
     }
 }

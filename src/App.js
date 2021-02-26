@@ -1,42 +1,17 @@
 import './App.css';
 import React, { useState } from 'react';
-import Card from './components/Card';
 import Search from './components/Search';
 import NoUserFound from './components/NoUserFound';
+import CardList from './components/CardList';
+// import Card from './components/Card';
 
 
 
 function App() {
-  // const [users, setUsers] = useState([])
-  const [name, setName] = useState('');
-  const [userName, setUsername] = useState('');
-  const [followers, setFollowers] = useState('');
-  const [following, setFollowing] = useState('');
-  const [repos, setRepos] = useState('');
-  const [avatar, setAvatar] = useState('');
+  const [users, setUsers] = useState([]); 
   const [userInput, setUserInput] = useState('');
-  const [joinDate, setJoinDate] = useState("")
-  const [searchResult, setSeachResult] = useState ({})
-
-
-  const setData = (
-    {
-      name,
-      login,
-      followers,
-      following,
-      public_repos,
-      avatar_url,
-      created_at,
-    }) => {
-    setName(name);
-    setUsername(login);
-    setFollowers(followers);
-    setFollowing(following);
-    setRepos(public_repos);
-    setAvatar(avatar_url);
-    setJoinDate(created_at);
-  };
+  const [searchResult, setSeachResult] = useState ({});
+  const [ready, setReady] = useState(false)
 
   const handleChange = (value) => {
     setUserInput(value);
@@ -48,42 +23,34 @@ function App() {
       throw new Error();
     }
     setObj({completed:true, success:true})
-    return response
+    return response;
   }
 
   const handleSubmit = () => {
       setSeachResult({completed:false, success:false})
-      // fetch(`https://api.github.com/users/?q=${userInput}`)
 
-      fetch(`https://api.github.com/users/${userInput}`)
+      fetch(`https://api.github.com/search/users?q=${userInput}`)
       .then(response => (handleResult(response, setSeachResult)))
       .then(response => response.json())
       .then(data => {
-          setData(data);
+         setUsers(data.items);
+         setReady(true);
+
         })
       .catch(error => {
-        console.log(error.message)})
+        console.log(error.message)});
   }
-
 
   return (
     <div>
       <Search
         handleChange={handleChange}
         handleSubmit={handleSubmit}
+        completed = {searchResult.completed}
       />
-      {searchResult.completed && !searchResult.success ? (<NoUserFound/>) : 
-      (<Card completed = {searchResult.completed}
-        userAvatarUrl={avatar}
-        name={name}
-        userName={userName}
-        followers={followers}
-        following={following}
-        repos={repos}
-        joinDate = {joinDate}
-      />)
-      }
-    </div>
+      {searchResult.completed && searchResult.success && ready ? (<CardList users = {users} userInput = {userInput} ready= {ready}/>): null}
+      {searchResult.completed && !searchResult.success ? (<NoUserFound/>) : null };
+     </div>
   )
 }
 

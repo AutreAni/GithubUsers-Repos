@@ -1,0 +1,44 @@
+.CardList {
+    height: 80vh;
+    width:100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    
+}
+
+.CardList_Ul {
+    display: flex;
+    list-style-type: none;
+    display: flex;
+    width:80%;
+    height:100%;
+    margin:0 auto;
+    overflow-x: auto;
+    margin:0%;
+    padding: 0;
+    justify-content:space-between ;
+}
+
+.CardList_Ul li {
+    margin:1em;
+    
+}
+
+*::-webkit-scrollbar-track
+{
+  -webkit-box-shadow: inset 0 0 6px rgba(180,180,180,0.3);
+  box-shadow: inset 0 0 6px rgba(180,180,180,0.3);
+  background-color: #f2f2f2;
+}
+
+*::-webkit-scrollbar
+{
+  width: 6px;
+  background-color: #f2f2f2;
+}
+
+*::-webkit-scrollbar-thumb
+{
+  background-color: #ccc;
+}
